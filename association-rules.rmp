@@ -107,67 +107,17 @@
         <parameter key="transform_binominal" value="false"/>
         <parameter key="use_underscore_in_name" value="false"/>
       </operator>
-      <operator activated="true" class="multiply" compatibility="7.6.001" expanded="true" height="145" name="Multiply" width="90" x="45" y="391"/>
-      <operator activated="true" class="fp_growth" compatibility="7.6.001" expanded="true" height="82" name="FP-Growth - Highly satisfied" width="90" x="246" y="697">
+      <operator activated="true" class="fp_growth" compatibility="7.6.001" expanded="true" height="82" name="FP-Growth" width="90" x="246" y="391">
         <parameter key="find_min_number_of_itemsets" value="true"/>
         <parameter key="min_number_of_itemsets" value="100"/>
         <parameter key="max_number_of_retries" value="15"/>
         <parameter key="min_support" value="0.01"/>
         <parameter key="max_items" value="-1"/>
-        <parameter key="must_contain" value="Satisfaction = 3 - Highly satisfied"/>
         <parameter key="keep_example_set" value="false"/>
       </operator>
-      <operator activated="true" class="create_association_rules" compatibility="7.6.001" expanded="true" height="82" name="Rules - Highly satisfied" width="90" x="380" y="697">
+      <operator activated="true" class="create_association_rules" compatibility="7.6.001" expanded="true" height="82" name="Associative rules" width="90" x="380" y="391">
         <parameter key="criterion" value="confidence"/>
-        <parameter key="min_confidence" value="0.8"/>
-        <parameter key="min_criterion_value" value="0.8"/>
-        <parameter key="gain_theta" value="2.0"/>
-        <parameter key="laplace_k" value="1.0"/>
-      </operator>
-      <operator activated="true" class="fp_growth" compatibility="7.6.001" expanded="true" height="82" name="FP-Growth - Satisfied" width="90" x="246" y="595">
-        <parameter key="find_min_number_of_itemsets" value="true"/>
-        <parameter key="min_number_of_itemsets" value="100"/>
-        <parameter key="max_number_of_retries" value="15"/>
-        <parameter key="min_support" value="0.01"/>
-        <parameter key="max_items" value="-1"/>
-        <parameter key="must_contain" value="Satisfaction = 2 - Satisfied"/>
-        <parameter key="keep_example_set" value="false"/>
-      </operator>
-      <operator activated="true" class="fp_growth" compatibility="7.6.001" expanded="true" height="82" name="FP-Growth - Unsatisfied" width="90" x="246" y="493">
-        <parameter key="find_min_number_of_itemsets" value="true"/>
-        <parameter key="min_number_of_itemsets" value="100"/>
-        <parameter key="max_number_of_retries" value="15"/>
-        <parameter key="min_support" value="0.01"/>
-        <parameter key="max_items" value="-1"/>
-        <parameter key="must_contain" value="Satisfaction = 1 - Unsatisfied"/>
-        <parameter key="keep_example_set" value="false"/>
-      </operator>
-      <operator activated="true" class="create_association_rules" compatibility="7.6.001" expanded="true" height="82" name="Rules - Unsatisfied" width="90" x="380" y="493">
-        <parameter key="criterion" value="confidence"/>
-        <parameter key="min_confidence" value="0.8"/>
-        <parameter key="min_criterion_value" value="0.8"/>
-        <parameter key="gain_theta" value="2.0"/>
-        <parameter key="laplace_k" value="1.0"/>
-      </operator>
-      <operator activated="true" class="fp_growth" compatibility="7.6.001" expanded="true" height="82" name="FP-Growth - Unknown" width="90" x="246" y="391">
-        <parameter key="find_min_number_of_itemsets" value="true"/>
-        <parameter key="min_number_of_itemsets" value="100"/>
-        <parameter key="max_number_of_retries" value="15"/>
-        <parameter key="min_support" value="0.01"/>
-        <parameter key="max_items" value="-1"/>
-        <parameter key="must_contain" value="Satisfaction = 0 - Unknown"/>
-        <parameter key="keep_example_set" value="false"/>
-      </operator>
-      <operator activated="true" class="create_association_rules" compatibility="7.6.001" expanded="true" height="82" name="Rules - Unknown" width="90" x="380" y="391">
-        <parameter key="criterion" value="confidence"/>
-        <parameter key="min_confidence" value="0.5"/>
-        <parameter key="min_criterion_value" value="0.8"/>
-        <parameter key="gain_theta" value="2.0"/>
-        <parameter key="laplace_k" value="1.0"/>
-      </operator>
-      <operator activated="true" class="create_association_rules" compatibility="7.6.001" expanded="true" height="82" name="Rules - Satisfied" width="90" x="380" y="595">
-        <parameter key="criterion" value="confidence"/>
-        <parameter key="min_confidence" value="0.8"/>
+        <parameter key="min_confidence" value="0.3"/>
         <parameter key="min_criterion_value" value="0.8"/>
         <parameter key="gain_theta" value="2.0"/>
         <parameter key="laplace_k" value="1.0"/>
@@ -176,25 +126,12 @@
       <connect from_op="Discretize" from_port="example set output" to_op="Remove Requestor" to_port="example set input"/>
       <connect from_op="Remove Requestor" from_port="example set output" to_op="Numerical to Polynominal" to_port="example set input"/>
       <connect from_op="Numerical to Polynominal" from_port="example set output" to_op="Nominal to Binominal" to_port="example set input"/>
-      <connect from_op="Nominal to Binominal" from_port="example set output" to_op="Multiply" to_port="input"/>
-      <connect from_op="Multiply" from_port="output 1" to_op="FP-Growth - Unknown" to_port="example set"/>
-      <connect from_op="Multiply" from_port="output 2" to_op="FP-Growth - Unsatisfied" to_port="example set"/>
-      <connect from_op="Multiply" from_port="output 3" to_op="FP-Growth - Satisfied" to_port="example set"/>
-      <connect from_op="Multiply" from_port="output 4" to_op="FP-Growth - Highly satisfied" to_port="example set"/>
-      <connect from_op="FP-Growth - Highly satisfied" from_port="frequent sets" to_op="Rules - Highly satisfied" to_port="item sets"/>
-      <connect from_op="Rules - Highly satisfied" from_port="rules" to_port="result 4"/>
-      <connect from_op="FP-Growth - Satisfied" from_port="frequent sets" to_op="Rules - Satisfied" to_port="item sets"/>
-      <connect from_op="FP-Growth - Unsatisfied" from_port="frequent sets" to_op="Rules - Unsatisfied" to_port="item sets"/>
-      <connect from_op="Rules - Unsatisfied" from_port="rules" to_port="result 2"/>
-      <connect from_op="FP-Growth - Unknown" from_port="frequent sets" to_op="Rules - Unknown" to_port="item sets"/>
-      <connect from_op="Rules - Unknown" from_port="rules" to_port="result 1"/>
-      <connect from_op="Rules - Satisfied" from_port="rules" to_port="result 3"/>
+      <connect from_op="Nominal to Binominal" from_port="example set output" to_op="FP-Growth" to_port="example set"/>
+      <connect from_op="FP-Growth" from_port="frequent sets" to_op="Associative rules" to_port="item sets"/>
+      <connect from_op="Associative rules" from_port="rules" to_port="result 1"/>
       <portSpacing port="source_input 1" spacing="0"/>
       <portSpacing port="sink_result 1" spacing="0"/>
       <portSpacing port="sink_result 2" spacing="0"/>
-      <portSpacing port="sink_result 3" spacing="0"/>
-      <portSpacing port="sink_result 4" spacing="0"/>
-      <portSpacing port="sink_result 5" spacing="0"/>
     </process>
   </operator>
 </process>
