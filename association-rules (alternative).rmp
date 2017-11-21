@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><process version="7.6.001">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="7.6.001" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true">
+      <operator activated="true" class="read_excel" compatibility="7.6.001" expanded="true" height="68" name="Read Excel" width="90" x="45" y="34">
+        <parameter key="excel_file" value="D:\data-mining-2\WA_Fn-UseC_-IT-Help-Desk.xlsx"/>
+        <parameter key="sheet_number" value="1"/>
+        <parameter key="imported_cell_range" value="A1:J100001"/>
+        <parameter key="encoding" value="SYSTEM"/>
+        <parameter key="first_row_as_names" value="false"/>
+        <list key="annotations">
+          <parameter key="0" value="Name"/>
+        </list>
+        <parameter key="date_format" value=""/>
+        <parameter key="time_zone" value="SYSTEM"/>
+        <parameter key="locale" value="English (United States)"/>
+        <list key="data_set_meta_data_information">
+          <parameter key="0" value="ticket.true.integer.id"/>
+          <parameter key="1" value="Requestor.true.integer.attribute"/>
+          <parameter key="2" value="RequestorSeniority.true.polynominal.attribute"/>
+          <parameter key="3" value="ITOwner.true.integer.attribute"/>
+          <parameter key="4" value="FiledAgainst.true.polynominal.attribute"/>
+          <parameter key="5" value="TicketType.true.polynominal.attribute"/>
+          <parameter key="6" value="Severity.true.polynominal.attribute"/>
+          <parameter key="7" value="Priority.true.polynominal.attribute"/>
+          <parameter key="8" value="daysOpen.true.integer.attribute"/>
+          <parameter key="9" value="Satisfaction.true.polynominal.attribute"/>
+        </list>
+        <parameter key="read_not_matching_values_as_missings" value="true"/>
+        <parameter key="datamanagement" value="double_array"/>
+        <parameter key="data_management" value="auto"/>
+      </operator>
+      <operator activated="true" class="discretize_by_frequency" compatibility="7.6.001" expanded="true" height="103" name="Discretize" width="90" x="179" y="34">
+        <parameter key="return_preprocessing_model" value="false"/>
+        <parameter key="create_view" value="false"/>
+        <parameter key="attribute_filter_type" value="single"/>
+        <parameter key="attribute" value="daysOpen"/>
+        <parameter key="attributes" value="|ITOwner|daysOpen"/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="numeric"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="real"/>
+        <parameter key="block_type" value="value_series"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="value_series_end"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+        <parameter key="use_sqrt_of_examples" value="false"/>
+        <parameter key="number_of_bins" value="5"/>
+        <parameter key="range_name_type" value="long"/>
+        <parameter key="automatic_number_of_digits" value="true"/>
+        <parameter key="number_of_digits" value="-1"/>
+      </operator>
+      <operator activated="true" class="select_attributes" compatibility="7.6.001" expanded="true" height="82" name="Remove Requestor" width="90" x="313" y="34">
+        <parameter key="attribute_filter_type" value="single"/>
+        <parameter key="attribute" value="Requestor"/>
+        <parameter key="attributes" value=""/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="attribute_value"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="time"/>
+        <parameter key="block_type" value="attribute_block"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="value_matrix_row_start"/>
+        <parameter key="invert_selection" value="true"/>
+        <parameter key="include_special_attributes" value="false"/>
+      </operator>
+      <operator activated="true" class="numerical_to_polynominal" compatibility="7.6.001" expanded="true" height="82" name="Numerical to Polynominal" width="90" x="447" y="34">
+        <parameter key="attribute_filter_type" value="all"/>
+        <parameter key="attribute" value=""/>
+        <parameter key="attributes" value=""/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="numeric"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="real"/>
+        <parameter key="block_type" value="value_series"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="value_series_end"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+      </operator>
+      <operator activated="true" class="nominal_to_binominal" compatibility="7.6.001" expanded="true" height="103" name="Nominal to Binominal" width="90" x="45" y="238">
+        <parameter key="return_preprocessing_model" value="false"/>
+        <parameter key="create_view" value="false"/>
+        <parameter key="attribute_filter_type" value="all"/>
+        <parameter key="attribute" value=""/>
+        <parameter key="attributes" value=""/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="nominal"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="file_path"/>
+        <parameter key="block_type" value="single_value"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="single_value"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+        <parameter key="transform_binominal" value="false"/>
+        <parameter key="use_underscore_in_name" value="false"/>
+      </operator>
+      <operator activated="true" class="rename" compatibility="7.6.001" expanded="true" height="82" name="Rename" width="90" x="179" y="238">
+        <parameter key="old_name" value="Satisfaction = 0 - Unknown"/>
+        <parameter key="new_name" value="Sat0"/>
+        <list key="rename_additional_attributes"/>
+      </operator>
+      <operator activated="true" class="rename" compatibility="7.6.001" expanded="true" height="82" name="Rename (2)" width="90" x="179" y="340">
+        <parameter key="old_name" value="Satisfaction = 1 - Unsatisfied"/>
+        <parameter key="new_name" value="Sat1"/>
+        <list key="rename_additional_attributes"/>
+      </operator>
+      <operator activated="true" class="rename" compatibility="7.6.001" expanded="true" height="82" name="Rename (3)" width="90" x="179" y="442">
+        <parameter key="old_name" value="Satisfaction = 2 - Satisfied"/>
+        <parameter key="new_name" value="Sat2"/>
+        <list key="rename_additional_attributes"/>
+      </operator>
+      <operator activated="true" class="rename" compatibility="7.6.001" expanded="true" height="82" name="Rename (4)" width="90" x="179" y="544">
+        <parameter key="old_name" value="Satisfaction = 3 - Highly satisfied"/>
+        <parameter key="new_name" value="Sat3"/>
+        <list key="rename_additional_attributes"/>
+      </operator>
+      <operator activated="true" class="fp_growth" compatibility="7.6.001" expanded="true" height="82" name="FP-Growth" width="90" x="447" y="238">
+        <parameter key="find_min_number_of_itemsets" value="true"/>
+        <parameter key="min_number_of_itemsets" value="100"/>
+        <parameter key="max_number_of_retries" value="15"/>
+        <parameter key="min_support" value="0.01"/>
+        <parameter key="max_items" value="-1"/>
+        <parameter key="keep_example_set" value="false"/>
+      </operator>
+      <connect from_op="Read Excel" from_port="output" to_op="Discretize" to_port="example set input"/>
+      <connect from_op="Discretize" from_port="example set output" to_op="Remove Requestor" to_port="example set input"/>
+      <connect from_op="Remove Requestor" from_port="example set output" to_op="Numerical to Polynominal" to_port="example set input"/>
+      <connect from_op="Numerical to Polynominal" from_port="example set output" to_op="Nominal to Binominal" to_port="example set input"/>
+      <connect from_op="Nominal to Binominal" from_port="example set output" to_op="Rename" to_port="example set input"/>
+      <connect from_op="Rename" from_port="example set output" to_op="Rename (2)" to_port="example set input"/>
+      <connect from_op="Rename (2)" from_port="example set output" to_op="Rename (3)" to_port="example set input"/>
+      <connect from_op="Rename (3)" from_port="example set output" to_op="Rename (4)" to_port="example set input"/>
+      <connect from_op="Rename (4)" from_port="example set output" to_op="FP-Growth" to_port="example set"/>
+      <connect from_op="FP-Growth" from_port="example set" to_port="result 1"/>
+      <connect from_op="FP-Growth" from_port="frequent sets" to_port="result 2"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+      <portSpacing port="sink_result 3" spacing="0"/>
+    </process>
+  </operator>
+</process>
