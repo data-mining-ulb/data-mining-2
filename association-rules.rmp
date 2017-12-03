@@ -112,7 +112,7 @@
         <parameter key="min_number_of_itemsets" value="100"/>
         <parameter key="max_number_of_retries" value="15"/>
         <parameter key="min_support" value="0.01"/>
-        <parameter key="max_items" value="-1"/>
+        <parameter key="max_items" value="3"/>
         <parameter key="keep_example_set" value="false"/>
       </operator>
       <operator activated="true" class="create_association_rules" compatibility="7.6.001" expanded="true" height="82" name="Associative rules" width="90" x="380" y="391">
